@@ -11,7 +11,7 @@ jobs:
       - uses: hmarr/debug-action@v1.0.0
                 
       - name: Process new card
-        if: github.event.project_card == 'created'
+#        if: github.event.project_card == 'created'
       - run: |
           echo "Card created"
           echo github.event
