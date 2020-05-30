@@ -11,20 +11,16 @@ jobs:
   process-project-update:
     runs-on: ubuntu-latest
     steps:
-      - name: Process card movement to Backlog
-        if: github.event.action == 'moved'
+      - name: Process variables
         run: |
           echo "Actor: ${{ github.actor }}"
           echo "Event: ${{ github.event.action }}"
           echo "From Column: ${{ github.event.changes.column_id.from }}"
-          echo "To Column: ${{ github.project_card.column_id }}"
-          echo "Issue URL: ${{ github.projct_card.content_url }}"
+          echo "To Column: ${{ github.event.project_card.column_id }}"
+          echo "Issue URL: ${{ github.event.project_card.content_url }}"
               
       - name: Dump GitHub context
+        if: github.event.action != ''
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
