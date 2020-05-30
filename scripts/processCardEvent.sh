@@ -10,9 +10,9 @@ then
   echo "Note: $CARD_NOTE"
 fi
 
-if [ "$CARD_ISSUE" != "" ]
+if [ "$CARD_ISSUE" == "" ]
 then
-  echo "** Skipping processing for non-Issue card \"${CARD_ISSUE}\""
+  echo "** Skipping processing for non-Issue card \"${CARD_NOTE}\""
   exit 0
 fi
 
