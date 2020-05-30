@@ -5,4 +5,4 @@ echo $CARD_ACTION
 echo $CARD_FROM
 echo $CARD_TO
 echo $CARD_ISSUE
-echo $CARD: NOTE
+echo $CARD_NOTE
