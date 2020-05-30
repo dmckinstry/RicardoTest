@@ -18,6 +18,7 @@ jobs:
           echo "From Column: ${{ github.event.changes.column_id.from }}"
           echo "To Column: ${{ github.event.project_card.column_id }}"
           echo "Issue URL: ${{ github.event.project_card.content_url }}"
+          echo "Note: ${{ github.event.project_card.content_url }}"
               
       - name: Dump GitHub context
         if: github.event.action != ''
