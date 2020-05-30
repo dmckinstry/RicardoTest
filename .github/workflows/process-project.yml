@@ -2,25 +2,23 @@ name: project-automation
 
 on:
   project_card:
-    types: [ created, moved, converted, edited ]
+    types: [ created, moved, converted, edited, deleted ]
 
 # Backlog = 8849132
 # Scheduled = 8849133
 
 jobs:
-  new-issue:
+  process-project-update:
     runs-on: ubuntu-latest
     steps:
       - name: Process card movement to Backlog
-        if: github.event.action == 'moved' && github.event.project_card.column_id == 8849132
+        if: github.event.action == 'moved'
         run: |
-          echo "Card moved to Backlog"
-              
-      - name: Process card movement to Scheduled
-        if: github.event.action == 'moved' && github.event.project_card.column_id == 8849133
-        run: |
-          echo "Card moved to Scheduled"
-              
+          echo "Actor: ${{ github.actor }}"
+          echo "Event: ${{ github.event.action }}"
+          echo "From Column: ${{ github.event.changes.column_id.from }}"
+          echo "To Column: ${{ github.project_card.column_id }}"
+          echo "Issue URL: ${{ github.projct_card.content_url }}"
               
       - name: Dump GitHub context
         env:
@@ -30,63 +28,3 @@ jobs:
         env:
           JOB_CONTEXT: ${{ toJson(job) }}
         run: echo "$JOB_CONTEXT"
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "$STEPS_CONTEXT"
-      - name: Dump runner context
-        env:
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$RUNNER_CONTEXT"
-      - name: Dump strategy context
-        env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: echo "$STRATEGY_CONTEXT"
-      - name: Dump matrix context
-        env:
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: echo "$MATRIX_CONTEXT"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#  test:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - name: Analyze project
-#      id: analyze
-#      uses: dmckinstry/ProjectSummary@v.ci
-#      with:
-#        login: dmckinstry
-#        repo: ProjectSummary
-#        project: ProjectSummaryTest
-#        token: ${{ secrets.token }}#
-#    - uses: actions/checkout@v2.1.1
-#    - name: Capture test results
-#      run: |
-#        echo '# Test Results'                             > test-results.md
-#        echo '## Markdown List'                           >> test-results.md
-#        echo '${{ steps.analyze.outputs.markdownList }}'  >> test-results.md
-#        echo '## JSON Results'                            >> test-results.md
-#        echo '``` JSON'                                   >> test-results.md
-#        echo '${{ steps.analyze.outputs.summary }}'       >> test-results.md
-#        echo '```'                                          >> test-results.md
-#        git add test-results.md
-#        git stage test-results.md
-#        git config --global user.email "${{ secrets.email }}"
-#        git config --global user.name "${{ secrets.login }}"
-#        git commit . -m "Updated integration test results per ${{ github.run_id }}"
-#        git push`
