@@ -13,6 +13,20 @@ jobs:
   process-project-update:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2.2.0
+        
+      - name: Process card event
+        env:
+          CARD_ACTOR: ${{ github.actor }}
+          CARD_ACTION: ${{ github.event.action }}
+          CARD_FROM: ${{ github.event.changes.column_id.from }}
+          CARD_TO: ${{ github.event.project_card.column_id }}
+          CARD_ISSUE: ${{ github.event.project_card.content_url }}
+          CARD:_NOTE: ${{ github.event.project_card.note }}
+        run: |
+          chmod +x ./scripts/processCardEvent.sh
+          ./scripts/processCardEvent.sh
+                
       - name: DEBUG - Dump parameters
         if: ${{ env.DEBUG }}
         env:
@@ -21,7 +35,7 @@ jobs:
           echo "Actor: ${{ github.actor }}"
           echo "Event: ${{ github.event.action }}"
           echo "From Column: ${{ github.event.changes.column_id.from }}"
-          echo "To Column: ${{ github.event.project_card.column_id }}"
+          echo "To Column: "
           echo "Issue URL: ${{ github.event.project_card.content_url }}"
           echo "Note: ${{ github.event.project_card.note }}"
           echo "CONTEXT:"
