@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [$DEBUG == true];
+if [$DEBUG == "true"];
 then
   echo "Actor: $CARD_ACTOR"
   echo "Action: $CARD_ACTION"
