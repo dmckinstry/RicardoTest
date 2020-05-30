@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: DEBUG - Dump parameters
-        if: $DEBUG
+        if: ${{ env.DEBUG }}
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
