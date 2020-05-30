@@ -1,8 +1,11 @@
 #!/bin/bash
 
-echo $CARD_ACTOR
-echo $CARD_ACTION
-echo $CARD_FROM
-echo $CARD_TO
-echo $CARD_ISSUE
-echo $CARD_NOTE
+if [$DEBUG == true];
+then
+  echo "Actor: $CARD_ACTOR"
+  echo "Action: $CARD_ACTION"
+  echo "From column: $CARD_FROM"
+  echo "To column: $CARD_TO"
+  echo "Issue URL: $CARD_ISSUE"
+  echo "Note: $CARD_NOTE"
+fi
