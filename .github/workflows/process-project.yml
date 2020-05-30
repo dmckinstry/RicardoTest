@@ -4,17 +4,23 @@ on:
   project_card:
     types: [ created, moved, converted, edited ]
 
+# Backlog = 8849132
+# Scheduled = 8849133
+
 jobs:
   new-issue:
     runs-on: ubuntu-latest
     steps:
-      - uses: hmarr/debug-action@v1.0.0
-                
-      - name: Process card movement
-        if: github.event.action == 'moved'
+      - name: Process card movement to Backlog
+        if: github.event.action == 'moved' && github.event.project_card.column_id == 8849132
         run: |
-          echo "Card moved"
-          echo github.event
+          echo "Card moved to Backlog"
+              
+      - name: Process card movement to Scheduled
+        if: github.event.action == 'moved' && github.event.project_card.column_id == 8849133
+        run: |
+          echo "Card moved to Scheduled"
+              
               
       - name: Dump GitHub context
         env:
