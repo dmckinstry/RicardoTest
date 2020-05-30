@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ["$DEBUG" == "true"];
+if [ "$DEBUG" != "" ]
 then
   echo "Actor: $CARD_ACTOR"
   echo "Action: $CARD_ACTION"
@@ -9,3 +9,11 @@ then
   echo "Issue URL: $CARD_ISSUE"
   echo "Note: $CARD_NOTE"
 fi
+
+if [ "$CARD_ISSUE" != "" ]
+then
+  echo "** Skipping processing for non-Issue card \"${CARD_ISSUE}\""
+  exit 0
+fi
+
+echo "Processing action $CARD_ACTION for $CARD_ACTOR"
