@@ -6,12 +6,17 @@ on:
 
 # Backlog = 8849132
 # Scheduled = 8849133
+env:
+  DEBUG: true
 
 jobs:
   process-project-update:
     runs-on: ubuntu-latest
     steps:
-      - name: Process variables
+      - name: DEBUG - Dump parameters
+        if: $DEBUG
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
           echo "Actor: ${{ github.actor }}"
           echo "Event: ${{ github.event.action }}"
@@ -19,9 +24,5 @@ jobs:
           echo "To Column: ${{ github.event.project_card.column_id }}"
           echo "Issue URL: ${{ github.event.project_card.content_url }}"
           echo "Note: ${{ github.event.project_card.note }}"
-              
-      - name: Dump GitHub context
-        if: github.event.action != ''
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+          echo "CONTEXT:"
+          echo "$GITHUB_CONTEXT"
