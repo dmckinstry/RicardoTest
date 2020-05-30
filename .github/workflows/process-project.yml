@@ -10,10 +10,10 @@ jobs:
     steps:
       - uses: hmarr/debug-action@v1.0.0
                 
-      - name: Process new card
-        if: github.event.project_card == 'created'
+      - name: Process card movement
+        if: github.action == 'moved'
         run: |
-          echo "Card created"
+          echo "Card moved"
           echo github.event
               
 #  test:
